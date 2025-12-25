@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Infinite Cortex</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap');
+      body {
+        font-family: 'Rajdhani', sans-serif;
+        background-color: #050505;
+        color: #e2e8f0;
+        overflow: hidden; /* Prevent body scroll, game handles it */
+      }
+      .font-mono {
+        font-family: 'JetBrains Mono', monospace;
+      }
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0f172a; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #334155; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #475569; 
+      }
+      .scanline {
+        background: linear-gradient(
+          to bottom,
+          rgba(255,255,255,0),
+          rgba(255,255,255,0) 50%,
+          rgba(0,0,0,0.1) 50%,
+          rgba(0,0,0,0.1)
+        );
+        background-size: 100% 4px;
+        pointer-events: none;
+      }
+      
+      /* --- Visual FX Animations --- */
+      
+      /* Particle Explosion (Success) */
+      @keyframes particle-explode {
+        0% { transform: rotate(var(--angle)) translateY(0) scale(1); opacity: 1; }
+        100% { transform: rotate(var(--angle)) translateY(-40px) scale(0); opacity: 0; }
+      }
+
+      /* Shockwave Ripple */
+      @keyframes shockwave {
+        0% { transform: scale(0.5); opacity: 1; border-width: 2px; }
+        100% { transform: scale(2.0); opacity: 0; border-width: 0px; }
+      }
+
+      /* Floating Up (Neon Forest Spores / Data Bits) */
+      @keyframes float-up {
+        0% { transform: translateY(0) scale(0.5); opacity: 0; }
+        50% { opacity: 0.8; }
+        100% { transform: translateY(-20px) scale(1); opacity: 0; }
+      }
+
+      /* Glitch Twitch (Data Wasteland) */
+      @keyframes glitch-skew {
+        0% { transform: translate(0); }
+        20% { transform: translate(-2px, 2px); }
+        40% { transform: translate(-2px, -2px); }
+        60% { transform: translate(2px, 2px); }
+        80% { transform: translate(2px, -2px); }
+        100% { transform: translate(0); }
+      }
+
+      /* Pulse Ring (Player / Interaction) */
+      @keyframes pulse-ring {
+        0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(6, 182, 212, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
+      }
+
+      /* Matrix Rain (Server City) */
+      @keyframes matrix-fall {
+        0% { transform: translateY(-100%); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateY(100%); opacity: 0; }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "howler": "https://esm.sh/howler@2.2.4"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
