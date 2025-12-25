@@ -40,16 +40,16 @@ const App: React.FC = () => {
     setGameState(prev => ({ ...prev, logs: [...prev.logs, newLog] }));
   }, []);
 
-  const triggerEffect = (x: number, y: number, type: VisualEffectType) => {
+  const triggerEffect = useCallback((x: number, y: number, type: VisualEffectType) => {
       const id = crypto.randomUUID();
       setVisualEffects(prev => [...prev, { id, x, y, type }]);
       
       // Cleanup effect after animation duration
-      const duration = type === 'success' ? 1500 : 800;
+      const duration = type === 'success' ? 1500 : type === 'move' ? 400 : 800;
       setTimeout(() => {
           setVisualEffects(prev => prev.filter(e => e.id !== id));
       }, duration);
-  };
+  }, []);
 
   // --- Audio Control ---
   const handleToggleMute = () => {
@@ -187,16 +187,20 @@ const App: React.FC = () => {
     if (gameState.activePuzzle) return; 
 
     playSound('move');
+    
     setGameState(prev => {
       const newX = prev.player.position.x + dx;
       const newY = prev.player.position.y + dy;
       
+      // Trigger move effect on new tile
+      triggerEffect(newX, newY, 'move');
+
       return {
         ...prev,
         player: { ...prev.player, position: { x: newX, y: newY } }
       };
     });
-  }, [gameState.activePuzzle]);
+  }, [gameState.activePuzzle, triggerEffect]);
 
   useEffect(() => {
     const { x, y } = gameState.player.position;

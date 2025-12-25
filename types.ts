@@ -48,7 +48,7 @@ export interface Puzzle {
   groundingUrls?: Array<{title: string, uri: string}>; // If search was used
 }
 
-export type VisualEffectType = 'success' | 'interact' | 'level_up' | 'error';
+export type VisualEffectType = 'success' | 'interact' | 'level_up' | 'error' | 'move';
 
 export interface VisualEffect {
   id: string;

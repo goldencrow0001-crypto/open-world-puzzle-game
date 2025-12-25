@@ -89,6 +89,13 @@ export const GameMap: React.FC<GameMapProps> = ({ playerPosition, worldData, onT
                     ))}
                 </div>
               );
+          case 'move':
+              return (
+                  <div className="absolute inset-0 z-30 pointer-events-none flex items-center justify-center">
+                      <div className="absolute inset-0 border border-cyan-500/30 rounded-full" 
+                           style={{animation: 'ripple-expand 0.4s ease-out forwards'}} />
+                  </div>
+              );
           default: return null;
       }
   };
@@ -98,6 +105,12 @@ export const GameMap: React.FC<GameMapProps> = ({ playerPosition, worldData, onT
           case BiomeType.NEON_FOREST:
               return (
                   <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
+                      {/* Fog Layer */}
+                      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/0 via-emerald-500/10 to-emerald-900/0"
+                           style={{backgroundSize: '200% 100%', animation: 'fog-flow 8s linear infinite'}} />
+                      
+                      {/* Floating Spores */}
                       {[...Array(3)].map((_, i) => (
                           <div key={i} className="absolute w-1 h-1 bg-emerald-400 rounded-full shadow-[0_0_5px_rgba(52,211,153,0.8)]"
                                style={{
@@ -110,26 +123,39 @@ export const GameMap: React.FC<GameMapProps> = ({ playerPosition, worldData, onT
               );
           case BiomeType.DATA_WASTELAND:
                return (
-                  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20 bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.5)_25%,rgba(0,0,0,0.5)_50%,transparent_50%,transparent_75%,rgba(0,0,0,0.5)_75%,rgba(0,0,0,0.5)_100%)] bg-[length:4px_4px]" 
-                       style={{animation: 'glitch-skew 3s infinite steps(5)'}} />
+                  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                       {/* Static Noise */}
+                       <div className="absolute inset-0 bg-white mix-blend-overlay" 
+                            style={{animation: 'static-flicker 2s infinite steps(4)'}} />
+                       {/* Glitch Overlay */}
+                       <div className="absolute inset-0 opacity-20 bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.5)_25%,rgba(0,0,0,0.5)_50%,transparent_50%,transparent_75%,rgba(0,0,0,0.5)_75%,rgba(0,0,0,0.5)_100%)] bg-[length:4px_4px]" 
+                            style={{animation: 'glitch-skew 3s infinite steps(5)'}} />
+                  </div>
                );
           case BiomeType.SERVER_CITY:
               return (
-                  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
-                       <div className="absolute top-0 left-1/4 w-px h-full bg-indigo-500/50" style={{animation: 'matrix-fall 2s infinite linear'}} />
-                       <div className="absolute top-0 left-3/4 w-px h-full bg-indigo-500/50" style={{animation: 'matrix-fall 3s infinite linear 1s'}} />
+                  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
+                       <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(79,70,229,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(79,70,229,0.1)_1px,transparent_1px)] bg-[size:8px_8px]" />
+                       <div className="absolute top-0 left-1/4 w-px h-full bg-indigo-500/60 shadow-[0_0_4px_rgba(99,102,241,1)]" style={{animation: 'matrix-fall 2s infinite linear'}} />
+                       <div className="absolute top-0 left-3/4 w-px h-full bg-indigo-500/60 shadow-[0_0_4px_rgba(99,102,241,1)]" style={{animation: 'matrix-fall 3s infinite linear 1s'}} />
                   </div>
               );
           case BiomeType.QUANTUM_FLUX:
               return (
-                  <div className="absolute inset-0 border-2 border-fuchsia-500/20 animate-pulse pointer-events-none" />
+                  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                      <div className="absolute inset-0 border-2 border-fuchsia-500/30 rounded-full" 
+                           style={{animation: 'rift-spin 6s linear infinite'}} />
+                      <div className="absolute inset-2 border border-fuchsia-400/20 rounded-full"
+                           style={{animation: 'rift-spin 4s linear infinite reverse'}} />
+                  </div>
               );
           case BiomeType.REALITY_NODE:
               return (
-                  <>
-                    <div className="absolute inset-0 bg-amber-500/5 animate-pulse pointer-events-none" />
-                    <div className="absolute inset-1 border border-amber-500/30 rounded-full animate-spin [animation-duration:10s]" />
-                  </>
+                  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div className="absolute inset-0 bg-amber-500/10 animate-pulse" />
+                    <div className="absolute -inset-4 bg-amber-400/5 blur-xl animate-pulse" />
+                    <div className="absolute inset-1 border border-amber-500/40 rounded-full" style={{animation: 'rift-spin 12s linear infinite'}} />
+                  </div>
               );
           default: return null;
       }
